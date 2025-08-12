@@ -1,6 +1,23 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/auth/AuthProvider";
+
 const Login = () => {
+  const { user, loginUser } = useContext(AuthContext);
+  console.log(user);
+
   const handleLogin = (e) => {
     e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+
+    loginUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        e.target.reset();
+      })
+      .catch((err) => console.log(err.message));
   };
 
   return (

@@ -1,6 +1,32 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/auth/AuthProvider";
+
 const SignIn = () => {
+  const { createUser } = useContext(AuthContext);
+
   const handleRegister = (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const phone = e.target.phone.value;
+    const password = e.target.password.value;
+    const confirm = e.target.confirm.value;
+
+    if (password === confirm) {
+      // create user
+      createUser(email, password)
+        .then((result) => {
+          const user = result.user;
+          console.log(user);
+          e.target.reset();
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+      console.log(name, email, phone, password, confirm);
+    } else {
+      console.log("Password not matched");
+    }
   };
 
   return (
@@ -15,9 +41,9 @@ const SignIn = () => {
               <label className="label">Name</label>
               <input
                 type="text"
-                name="Full Name"
+                name="name"
                 className="input"
-                placeholder="Name"
+                placeholder="Full Name"
               />
               <label className="label">Email</label>
               <input
@@ -25,6 +51,7 @@ const SignIn = () => {
                 name="email"
                 className="input"
                 placeholder="Email"
+                required
               />
               <label className="label">Phone</label>
               <input
@@ -47,9 +74,7 @@ const SignIn = () => {
                 className="input "
                 placeholder="Confirm Password"
               />
-              <div>
-                <a className="link link-hover">Forgot password?</a>
-              </div>
+              <div></div>
               <button className="btn btn-neutral mt-4">Sign in</button>
             </form>
           </div>
