@@ -1,9 +1,11 @@
-import "./App.css";
+import { Outlet } from "react-router-dom";
+import Header from "./components/Shared/Header/Header";
 
 function App() {
   return (
     <>
-      <h1 className="text-red-500">Project Setup</h1>
+      <Header></Header>
+      <Outlet></Outlet>
     </>
   );
 }
