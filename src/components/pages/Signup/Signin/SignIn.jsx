@@ -1,8 +1,12 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../providers/auth/AuthProvider";
+import { sendEmailVerification } from "firebase/auth";
+import { auth } from "../../../../firebase/firebase.config";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const { createUser } = useContext(AuthContext);
+  const [error, setError] = useState(null);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -12,6 +16,18 @@ const SignIn = () => {
     const password = e.target.password.value;
     const confirm = e.target.confirm.value;
     const role = e.target.role.value;
+    const users = { email, password, role };
+
+    // reset error message
+    setError("");
+
+    // password validation
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{6,}$/;
+    if (!passwordRegex.test(password && confirm)) {
+      setError("Use at least one Capital Word & Small word & a special symbol");
+      return;
+    }
 
     if (password === confirm) {
       // create user
@@ -20,14 +36,30 @@ const SignIn = () => {
           const user = result.user;
           console.log(user);
           e.target.reset();
+
+          // sent email verification
+          sendEmailVerification(auth.currentUser).then(() => {
+            toast.error("Verify your email");
+          });
         })
         .catch((error) => {
           console.log(error.message);
         });
       console.log(name, email, phone, password, confirm, role);
     } else {
-      console.log("Password not matched");
+      setError("Password not matched");
     }
+
+    fetch("http://localhost:4000/users", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(users),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err.message));
   };
 
   return (
@@ -81,6 +113,7 @@ const SignIn = () => {
                 <option>Developer</option>
                 <option>Moderator</option>
               </select>
+              {error && <p className=" text-red-400">{error}</p>}
               <button className="btn btn-neutral mt-4">Sign in</button>
             </form>
           </div>

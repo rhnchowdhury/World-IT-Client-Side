@@ -1,24 +1,45 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { AuthContext } from "../../../providers/auth/AuthProvider";
+import { auth } from "../../../../firebase/firebase.config";
+import { toast } from "react-toastify";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const Login = () => {
   const { user, loginUser } = useContext(AuthContext);
-  console.log(user);
+
+  const emailRef = useRef();
 
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const role = e.target.role.value;
-    console.log(email, password, role);
+    console.log(email, password);
 
+    // user login
     loginUser(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
-        e.target.reset();
+
+        // email verify
+        if (!user.emailVerified) {
+          toast.warning("Please verify your email");
+        } else {
+          e.target.reset();
+        }
       })
       .catch((err) => console.log(err.message));
+  };
+
+  // forget password
+  const forgetPass = () => {
+    const email = emailRef.current.value;
+    if (!email) {
+      toast.error("Please give your email");
+    } else {
+      sendPasswordResetEmail(auth, email).then(() => {
+        toast.warning("Reset email send. Check your inbox");
+      });
+    }
   };
 
   return (
@@ -35,6 +56,7 @@ const Login = () => {
                 type="email"
                 name="email"
                 className="input"
+                ref={emailRef}
                 placeholder="Email"
               />
               <label className="label">Password</label>
@@ -44,18 +66,9 @@ const Login = () => {
                 className="input "
                 placeholder="Password"
               />
-              <select
-                name="role"
-                defaultValue="Pick a color"
-                className="select">
-                <option>User</option>
-                <option>Admin</option>
-                <option>Developer</option>
-                <option>Moderator</option>
-              </select>
-              <div>
-                <a className="link link-hover">Forgot password?</a>
-              </div>
+              <label onClick={forgetPass}>
+                <a href="#">Forget password?</a>
+              </label>
               <button className="btn btn-neutral mt-4">Login</button>
             </form>
           </div>

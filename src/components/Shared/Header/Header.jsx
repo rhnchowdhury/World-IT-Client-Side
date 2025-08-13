@@ -18,21 +18,20 @@ const Header = () => {
   const menu = (
     <>
       <li>
-        <NavLink to="/" className="text-white  font-bold">
+        <NavLink to="/" className="text-white font-bold">
           Home
         </NavLink>
       </li>
 
-      {user ? (
+      {user?.emailVerified ? (
         <>
           <li>
-            <NavLink className="text-white  font-bold">Dashboard</NavLink>
+            <NavLink to="/dashboard" className="text-white font-bold">
+              Dashboard
+            </NavLink>
           </li>
           <li>
-            <NavLink
-              onClick={handleLogout}
-              to="/login"
-              className="text-white  font-bold">
+            <NavLink onClick={handleLogout} className="text-white font-bold">
               Log Out
             </NavLink>
           </li>
@@ -40,12 +39,12 @@ const Header = () => {
       ) : (
         <>
           <li>
-            <NavLink to="/sign" className="text-white  font-bold">
+            <NavLink to="/sign" className="text-white font-bold">
               Sign Up
             </NavLink>
           </li>
           <li>
-            <NavLink to="/login" className="text-white  font-bold">
+            <NavLink to="/login" className="text-white font-bold">
               Log in
             </NavLink>
           </li>
@@ -76,7 +75,7 @@ const Header = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            className="menu menu-sm dropdown-content  bg-red-400 rounded-box z-1 mt-3 w-52 p-2 shadow">
             {menu}
           </ul>
         </div>
