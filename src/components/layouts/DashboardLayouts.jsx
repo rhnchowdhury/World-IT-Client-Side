@@ -16,7 +16,10 @@ const DashboardLayouts = () => {
             <Link to="/dashboard/admin">Admin</Link>
           </li>
           <li>
-            <Link to="/dashboard/user">User</Link>
+            <Link to="/dashboard/users">All Users</Link>
+          </li>
+          <li>
+            <Link to="/dashboard/client">User</Link>
           </li>
           <li>
             <Link to="/dashboard/developer">Developer</Link>

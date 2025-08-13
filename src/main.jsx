@@ -14,6 +14,7 @@ import Client from "./components/Dashboard/Client/Client.jsx";
 import Developer from "./components/Dashboard/Dev/Developer.jsx";
 import Moderator from "./components/Dashboard/Moderator/Moderator.jsx";
 import { ToastContainer } from "react-toastify";
+import AllUsers from "./components/Dashboard/users/AllUsers.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,13 @@ const router = createBrowserRouter([
         element: <Admin />,
       },
       {
-        path: "/dashboard/user",
+        path: "/dashboard/users",
+        element: <AllUsers />,
+      },
+      {
+        path: "/dashboard/client",
+        loader: () => fetch("http://localhost:4000/users"),
+        // fetch(`http://localhost:4000/users/${params.id}`),
         element: <Client />,
       },
       {

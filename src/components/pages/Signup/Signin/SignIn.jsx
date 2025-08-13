@@ -5,7 +5,7 @@ import { auth } from "../../../../firebase/firebase.config";
 import { toast } from "react-toastify";
 
 const SignIn = () => {
-  const { createUser } = useContext(AuthContext);
+  const { updateUser, createUser } = useContext(AuthContext);
   const [error, setError] = useState(null);
 
   const handleRegister = (e) => {
@@ -16,7 +16,6 @@ const SignIn = () => {
     const password = e.target.password.value;
     const confirm = e.target.confirm.value;
     const role = e.target.role.value;
-    const users = { email, password, role };
 
     // reset error message
     setError("");
@@ -41,15 +40,26 @@ const SignIn = () => {
           sendEmailVerification(auth.currentUser).then(() => {
             toast.error("Verify your email");
           });
+
+          // update user profile
+          const profile = {
+            displayName: name,
+            phoneNumber: phone,
+          };
+
+          updateUser(profile).then(() => {
+            console.log("Update profile");
+          });
         })
         .catch((error) => {
           console.log(error.message);
         });
-      console.log(name, email, phone, password, confirm, role);
     } else {
       setError("Password not matched");
     }
 
+    // users save in database
+    const users = { email, password, name, phone, role };
     fetch("http://localhost:4000/users", {
       method: "POST",
       headers: { "content-type": "application/json" },
