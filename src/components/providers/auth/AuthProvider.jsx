@@ -31,6 +31,21 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
       setUser(currentUser);
+
+      //! JWT create
+      if (currentUser) {
+        const userInfo = { email: currentUser.email };
+        fetch("http://localhost:4000/jwt", userInfo)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.accessToken) {
+              localStorage.setItem("accessToken", data.accessToken);
+            }
+          });
+      } else {
+        localStorage.removeItem("accessToken");
+      }
+
       setLoading(false);
     });
     return () => {

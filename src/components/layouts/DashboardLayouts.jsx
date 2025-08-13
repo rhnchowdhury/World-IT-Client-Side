@@ -1,6 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
+import useAdmin from "../../hooks/useAdmin";
+import { useContext } from "react";
+import { AuthContext } from "../providers/auth/AuthProvider";
 
 const DashboardLayouts = () => {
+  const { user } = useContext(AuthContext);
+  const [isAdmin] = useAdmin(user?.email);
   return (
     <div className="drawer drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -11,22 +16,26 @@ const DashboardLayouts = () => {
       <div className="drawer-side ">
         <ul className="menu bg-base-200 text-base-content min-h-full lg:w-80 sm:w-12  p-4">
           {/* Sidebar content here */}
-
-          <li>
-            <Link to="/dashboard/admin">Admin</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/users">All Users</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/client">User</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/developer">Developer</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/moderator">Moderator</Link>
-          </li>
+          <>
+            <li>
+              <Link to="/dashboard/admin">Admin</Link>
+            </li>
+            <li>
+              <Link to="/dashboard/users">All Users</Link>
+            </li>
+            <li>
+              <Link to="/dashboard/client">User</Link>
+            </li>
+            <li>
+              <Link to="/dashboard/developer">Developer</Link>
+            </li>
+            <li>
+              <Link to="/dashboard/moderator">Moderator</Link>
+            </li>
+          </>
+          {/* {isAdmin && (
+            
+          )} */}
         </ul>
       </div>
     </div>
