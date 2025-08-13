@@ -9,7 +9,8 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    const role = e.target.role.value;
+    console.log(email, password, role);
 
     loginUser(email, password)
       .then((result) => {
@@ -43,6 +44,15 @@ const Login = () => {
                 className="input "
                 placeholder="Password"
               />
+              <select
+                name="role"
+                defaultValue="Pick a color"
+                className="select">
+                <option>User</option>
+                <option>Admin</option>
+                <option>Developer</option>
+                <option>Moderator</option>
+              </select>
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>

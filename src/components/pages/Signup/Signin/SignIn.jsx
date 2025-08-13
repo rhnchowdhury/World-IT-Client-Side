@@ -11,6 +11,7 @@ const SignIn = () => {
     const phone = e.target.phone.value;
     const password = e.target.password.value;
     const confirm = e.target.confirm.value;
+    const role = e.target.role.value;
 
     if (password === confirm) {
       // create user
@@ -23,7 +24,7 @@ const SignIn = () => {
         .catch((error) => {
           console.log(error.message);
         });
-      console.log(name, email, phone, password, confirm);
+      console.log(name, email, phone, password, confirm, role);
     } else {
       console.log("Password not matched");
     }
@@ -74,7 +75,12 @@ const SignIn = () => {
                 className="input "
                 placeholder="Confirm Password"
               />
-              <div></div>
+              <select name="role" className="select">
+                <option>User</option>
+                <option>Admin</option>
+                <option>Developer</option>
+                <option>Moderator</option>
+              </select>
               <button className="btn btn-neutral mt-4">Sign in</button>
             </form>
           </div>

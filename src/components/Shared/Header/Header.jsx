@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/auth/AuthProvider";
 
 const Header = () => {
-  const { logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   const handleLogout = () => {
     logOut()
@@ -18,23 +18,39 @@ const Header = () => {
   const menu = (
     <>
       <li>
-        <NavLink to="/" className="text-white">
+        <NavLink to="/" className="text-white  font-bold">
           Home
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/sign" className="text-white">
-          Sign Up
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/login" className="text-white">
-          Log in
-        </NavLink>
-      </li>
-      <li>
-        <NavLink className="text-white">Home</NavLink>
-      </li>
+
+      {user ? (
+        <>
+          <li>
+            <NavLink className="text-white  font-bold">Dashboard</NavLink>
+          </li>
+          <li>
+            <NavLink
+              onClick={handleLogout}
+              to="/login"
+              className="text-white  font-bold">
+              Log Out
+            </NavLink>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <NavLink to="/sign" className="text-white  font-bold">
+              Sign Up
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/login" className="text-white  font-bold">
+              Log in
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -70,9 +86,7 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1">{menu}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn" onClick={handleLogout}>
-          Log Out
-        </a>
+        <a className="btn">Button</a>
       </div>
     </div>
   );
