@@ -1,12 +1,14 @@
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Developer = () => {
-  const load = useLoaderData();
-  console.log(load);
+  const { email } = useParams();
 
   return (
     <div>
-      <h1>This is developer</h1>
+      <h1 className="text-md font-bold">
+        you <span className="font-light">({email})</span> are internal user with
+        project access{" "}
+      </h1>
     </div>
   );
 };

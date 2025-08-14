@@ -3,12 +3,13 @@ import useAdmin from "../../hooks/useAdmin";
 import { useContext } from "react";
 import { AuthContext } from "../providers/auth/AuthProvider";
 import useDeveloper from "../../hooks/useDeveloper";
+import useModerator from "../../hooks/useModerator";
 
 const DashboardLayouts = () => {
   const { user } = useContext(AuthContext);
   const [isAdmin] = useAdmin(user?.email);
   const [isDeveloper] = useDeveloper(user?.email);
-  console.log(isDeveloper);
+  const [isModerator] = useModerator(user?.email);
 
   return (
     <div className="drawer drawer-open">
@@ -33,7 +34,7 @@ const DashboardLayouts = () => {
                 <Link to="/dashboard/client">User</Link>
               </li>
               <li>
-                <Link to="/dashboard/developer">Developer</Link>
+                <Link to="/dashboard/dev">Developer</Link>
               </li>
               <li>
                 <Link to="/dashboard/moderator">Moderator</Link>
@@ -45,6 +46,18 @@ const DashboardLayouts = () => {
               <Link to={`/dashboard/developer/${user.email}`}>Developer</Link>
             </li>
           )}
+          {isModerator && (
+            <li>
+              <Link to={`/dashboard/moderator/${user.email}`}>Moderator</Link>
+            </li>
+          )}
+
+          {/* {user?.role === "User" && (
+            
+          )} */}
+          <li>
+            <Link to="/dashboard/client">User</Link>
+          </li>
           <li>
             <Link to="/">Go to Home</Link>
           </li>

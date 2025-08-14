@@ -3,9 +3,11 @@ import { AuthContext } from "../../../providers/auth/AuthProvider";
 import { auth } from "../../../../firebase/firebase.config";
 import { toast } from "react-toastify";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { user, loginUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const emailRef = useRef();
 
@@ -24,6 +26,7 @@ const Login = () => {
         if (!user.emailVerified) {
           toast.warning("Please verify your email");
         } else {
+          navigate("/dashboard");
           e.target.reset();
         }
       })
@@ -71,6 +74,12 @@ const Login = () => {
               </label>
               <button className="btn btn-neutral mt-4">Login</button>
             </form>
+            <p style={{ color: "#675444" }}>
+              New to Here?{" "}
+              <Link to="/sign" className="text-[#24A1C8] font-bold">
+                Create an account
+              </Link>
+            </p>
           </div>
         </div>
       </div>

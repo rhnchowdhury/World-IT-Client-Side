@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { PiUserSwitchFill } from "react-icons/pi";
 import { AuthContext } from "../../providers/auth/AuthProvider";
 
 const Header = () => {
@@ -17,12 +18,6 @@ const Header = () => {
 
   const menu = (
     <>
-      <li>
-        <NavLink to="/" className="text-white font-bold">
-          Home
-        </NavLink>
-      </li>
-
       {user?.emailVerified ? (
         <>
           <li>
@@ -39,12 +34,7 @@ const Header = () => {
       ) : (
         <>
           <li>
-            <NavLink to="/sign" className="text-white font-bold">
-              Sign Up
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/login" className="text-white font-bold">
+            <NavLink to="/" className="text-white font-bold">
               Log in
             </NavLink>
           </li>
@@ -85,7 +75,7 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1">{menu}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <PiUserSwitchFill className="text-white text-2xl" />
       </div>
     </div>
   );

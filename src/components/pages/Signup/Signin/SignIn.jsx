@@ -3,6 +3,7 @@ import { AuthContext } from "../../../providers/auth/AuthProvider";
 import { sendEmailVerification } from "firebase/auth";
 import { auth } from "../../../../firebase/firebase.config";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const { updateUser, createUser } = useContext(AuthContext);
@@ -126,6 +127,12 @@ const SignIn = () => {
               {error && <p className=" text-red-400">{error}</p>}
               <button className="btn btn-neutral mt-4">Sign in</button>
             </form>
+            <p style={{ color: "#675444" }}>
+              Already have an account?{" "}
+              <Link to="/" className="text-[#24A1C8] font-bold">
+                Please login
+              </Link>
+            </p>
           </div>
         </div>
       </div>

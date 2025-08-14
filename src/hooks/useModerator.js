@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useModerator = () => {
+const useModerator = (email) => {
   const [isModerator, setIsModerator] = useState(false);
   const [isModeratorLoading, setIsModeratorLoading] = useState(true);
   useEffect(() => {

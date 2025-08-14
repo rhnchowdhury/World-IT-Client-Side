@@ -13,9 +13,8 @@ const Client = () => {
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
-    const phone = form.phone.value;
-    const password = form.password.value;
-    const updateUser = { name, email, phone, password };
+
+    const updateUser = { name, email };
 
     fetch(`http://localhost:4000/users`, {
       method: "PUT",
@@ -48,20 +47,6 @@ const Client = () => {
           name="email"
           className="input"
           defaultValue={user?.email}
-        />
-        <label className="label">Phone</label>
-        <input
-          type="text"
-          name="phone"
-          className="input"
-          defaultValue={user?.phone}
-        />
-        <label className="label">Password</label>
-        <input
-          type="password"
-          name="password"
-          className="input "
-          defaultValue={user?.password}
         />
         <button className="btn btn-neutral mt-4">Update</button>
       </form>
