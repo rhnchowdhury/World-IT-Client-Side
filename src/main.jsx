@@ -50,12 +50,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/client",
-        loader: () => fetch("http://localhost:4000/users"),
-        // fetch(`http://localhost:4000/users/${params.id}`),
         element: <Client />,
       },
       {
-        path: "/dashboard/developer",
+        path: "/dashboard/developer/:email",
+        loader: ({ params }) =>
+          fetch(`http://localhost:4000/users/moderator/${params.email}`),
         element: <Developer />,
       },
       {
